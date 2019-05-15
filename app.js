@@ -9,6 +9,8 @@ const mongoose = require('mongoose');//to set up the db connection in app.js fil
 
 const productRoutes= require('./api/routes/product');
 const orderRoutes = require('./api/routes/orders');
+const trainRoutes = require('./api/routes/trains');
+const govRoutes=require('./api/routes/govs');
 
 mongoose.connect('mongodb+srv://tharuka:'+process.env.MONGO_ATLAS_PW+ '@cluster0-uhrqp.mongodb.net/test?retryWrites=true',{
 //useMongoClient:true- this gave an error
@@ -24,8 +26,9 @@ app.use(bodyPorser.json());//extract json data and make easily readable to us
 
 //adding a response header appending them to incomming requests to prevent corse errors
 app.use((req, res, next)=>{
+res.header("Access-Control-Allow-Origin","http://localhost:3000");
 res.header('Access-Control-Allow-Origin','*');
-res.header('Aceess-Control-Allow-Headers','Origin, X-Requested-Width, Content-Type, Accept, Authorization');
+res.header('Access-Control-Allow-Headers','Origin, X-Requested-Width, Content-Type, Accept, Authorization');
 if(req.method === 'OPTIONS'){//OPTIONS FOR POST AND PUT OPERATIONS
 res.header('Access-Control-Allow-Methods','PUT, POST, PATCH, DELETE, GET');
 return res.status(200).json({});
@@ -36,6 +39,9 @@ next();//if it is not a POST or PUT request other routes can take this over
 
 app.use('/product', productRoutes);
 app.use('/orders', orderRoutes);
+app.use('/trains',trainRoutes);
+app.use('/govs',govRoutes);
+
 
 // handle every request that reaches this line , cause if you reach this line no routes file in router directory was able to handle the rquest
 app.use((req, res, next)=>{
