@@ -15,6 +15,7 @@ const trainRoutes = require('./api/routes/trains');
 const govRoutes=require('./api/routes/govs');
 const bookResults=require('./api/routes/bookResults');
 const email=require('./api/routes/email');
+const sms=require('./api/routes/sms');
 
 mongoose.connect('mongodb+srv://tharuka:'+process.env.MONGO_ATLAS_PW+ '@cluster0-uhrqp.mongodb.net/test?retryWrites=true',{
 //useMongoClient:true- this gave an error
@@ -47,6 +48,7 @@ app.use('/trains',trainRoutes);
 app.use('/govs',govRoutes);
 app.use('/bookResults',bookResults);
 app.use('/email',email);
+app.use('/sms',sms);
 
 
 // handle every request that reaches this line , cause if you reach this line no routes file in router directory was able to handle the rquest
